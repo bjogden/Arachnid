@@ -12,3 +12,9 @@ Simply using Python's [requests](https://docs.python-requests.org/) library will
     - Jupyter Notebook
 - Selenium
     - Firefox
+
+### Local Development
+
+1. `docker-compose up`
+2. Navigate to [http://localhost:8888](http://localhost:8888) to open Jupyter Notebook UI to create new Python notebook
+3. Import Selenium, and get started
