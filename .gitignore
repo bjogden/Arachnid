@@ -132,3 +132,4 @@ dmypy.json
 app/logs/*
 app/data/
 app/*.png
+app/images/
