@@ -1,20 +1,37 @@
-import time
-from selenium.webdriver import Firefox
-from typing import Union
 from __future__ import annotations
+import time
+from typing import Union
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
-from config import OPTIONS, SERVICE
+from config import (
+    OPTIONS,
+    GECKODRIVER_LOG_PATH,
+    GECKODRIVER_PATH,
+)
 
 
 class Arachnid:
     """Initialize Arachnid instance that wraps Selenium Firefox."""
     INSTANCE = None
     
-    def __init__(self, page_load_wait_duration: int = 3) -> None:
+    def __init__(
+        self,
+        page_load_wait_duration: int = 3,
+        driver_path: str = GECKODRIVER_PATH,
+        driver_log_path: str = GECKODRIVER_LOG_PATH,
+        driver_options: Options = OPTIONS,
+    ) -> None:
         if not self.INSTANCE:
+            self._service = Service(
+                executable_path=driver_path,
+                log_path=driver_log_path,
+            )
+
             self.INSTANCE = Firefox(
-                options=OPTIONS,
-                service=SERVICE,
+                options=driver_options,
+                service=self._service,
             )
 
         self.page_load_wait_duration = page_load_wait_duration
@@ -51,5 +68,7 @@ class Arachnid:
         if not self.INSTANCE:
             return
         
+        self.INSTANCE.close()
         self.INSTANCE.quit()
+        self._service.stop()
         self.INSTANCE = None
