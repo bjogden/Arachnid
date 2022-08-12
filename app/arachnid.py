@@ -10,14 +10,14 @@ class Arachnid:
     """Initialize Arachnid instance that wraps Selenium Firefox."""
     INSTANCE = None
     
-    def __init__(self) -> Union[Arachnid, None]:
-        if self.INSTANCE:
-            return self.INSTANCE
-        
-        self.INSTANCE = Firefox(
-            options=OPTIONS,
-            service=SERVICE,
-        )
+    def __init__(self, page_load_wait_duration: int = 3) -> None:
+        if not self.INSTANCE:
+            self.INSTANCE = Firefox(
+                options=OPTIONS,
+                service=SERVICE,
+            )
+
+        self.page_load_wait_duration = page_load_wait_duration
         
     def get(self, url: str) -> Union[Firefox, None]:
         if not self.INSTANCE:
@@ -25,8 +25,11 @@ class Arachnid:
         
         try:
             self.INSTANCE.get(url)
-            # Explicit wait for page load
-            time.sleep(3)
+
+            if self.page_load_wait_duration:
+                print(f'Loaded. Waiting {self.page_load_wait_duration} seconds...')
+                # Explicit wait for page load
+                time.sleep(self.page_load_wait_duration)
             
             return self.INSTANCE
 
