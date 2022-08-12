@@ -14,8 +14,9 @@ from config import (
 
 class Arachnid:
     """Initialize Arachnid instance that wraps Selenium Firefox."""
+
     INSTANCE = None
-    
+
     def __init__(
         self,
         page_load_wait_duration: int = 3,
@@ -35,39 +36,39 @@ class Arachnid:
             )
 
         self.page_load_wait_duration = page_load_wait_duration
-        
+
     def get(self, url: str) -> Union[Firefox, None]:
         if not self.INSTANCE:
-            raise Exception('You must initialize an Arachnid instance.')
-        
+            raise Exception("You must initialize an Arachnid instance.")
+
         try:
             self.INSTANCE.get(url)
 
             if self.page_load_wait_duration:
-                print(f'Loaded. Waiting {self.page_load_wait_duration} seconds...')
+                print(f"Loaded. Waiting {self.page_load_wait_duration} seconds...")
                 # Explicit wait for page load
                 time.sleep(self.page_load_wait_duration)
-            
+
             return self.INSTANCE
 
         except Exception as e:
-            print(f'Driver `get` error {e}')
-            
+            print(f"Driver `get` error {e}")
+
             self.INSTANCE.quit()
-        
+
     def execute_js(self, js: str):
         return self.INSTANCE.execute_script(js)
-    
+
     def get_screenshot(self, fname: str):
-        if not fname.endswith('.png'):
-            fname += '.png'
-            
+        if not fname.endswith(".png"):
+            fname += ".png"
+
         return self.INSTANCE.save_screenshot(fname)
-    
+
     def quit(self):
         if not self.INSTANCE:
             return
-        
+
         self.INSTANCE.close()
         self.INSTANCE.quit()
         self._service.stop()
