@@ -13,6 +13,14 @@ Simply using Python's [requests](https://docs.python-requests.org/) library will
 - Selenium
     - Firefox
 
+### Pre-commit Setup
+1. `cd Arachnid`
+2. `cp git-hooks/pre-commit .git/hooks/`
+3. `chmod +x .git/hooks/pre-commit`
+
+...or all as one line:
+`cd Arachnid && cp git-hooks/pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit`
+
 ### Local Development
 
 1. `docker-compose up`
