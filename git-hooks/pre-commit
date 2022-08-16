@@ -1,0 +1,11 @@
+#!/bin/sh
+
+STAGED_FILES=$(git diff --name-only --cached | grep ".py$")
+
+if [[ "$STAGED_FILES" = "" ]]; then
+  exit 0
+fi
+
+echo "Running black..."
+
+docker-compose run --rm notebook black app/
