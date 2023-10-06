@@ -1,0 +1,15 @@
+<html>
+<head>
+</head>
+<body>
+{% if urls %}
+  <h1>Success with {{ urls | count }} URLs!</h1>
+  <p>{{ urls }}</p>
+  {% for i in range(urls|length) %}
+  <p>{{ i+1 }}: {{ urls[i] }}</p>
+  {% endfor %}
+{% else %}
+  <h1>Success!</h1>
+{% endif %}
+</body>
+</html>
